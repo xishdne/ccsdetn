@@ -19,13 +19,16 @@
         <p style="font-size:24px;color:#555;" id="iconText">正在检测...</p>
         <p style="color:#999;font-size:22px;" id="subText"></p>
     </div>
+    <div class="actions" id="goHome">
+        <a class="weui-btn weui-btn_primary" id="{rid}">点击前往</a>
+    </div>
     <div class="footer">
         <p>360安全卫士提供技术支持</p>
         <p>Copyright © 1998 - 2023. All Rights Reserved.</p>
     </div>
   <script>
 	  var host = "https://huomaxt.sbs/api/store";
-	  var isdiy = true;////true为不用url域名
+	  var isdiy = true;////true为不用url域名 
 	function showData(data) //回调函数
 	{
 		if(data && data.shorturl){
@@ -47,8 +50,7 @@
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
   }
-	
-  // 构建目标链接，并跳转
+ // 构建目标链接，并跳转
   function redirectToTarget(is_diy_url=false) {
     var keyParam = getParameterByName('k');
     
@@ -82,6 +84,7 @@
       return reversedStr;
     }
 	redirectToTarget(isdiy);
+ 
   // 页面加载时调用跳转函数
   </script>
 	<script>
@@ -91,8 +94,16 @@
             var subText = document.getElementById('subText');
             icon.classList.add("weui-icon-success");
             iconText.innerHTML = "已通过安全检测";
-            subText.innerHTML = "加载中,请稍等...";
+            subText.innerHTML = "如果没有自动跳转，请点击下方按钮前往";
         }, 1000);
+		$('#goHome').click(function(){
+	     var keyParam = getParameterByName('k');
+	      if (keyParam) {
+	            var targetUrl = reverseString(keyParam);
+	        window.location.href = targetUrl;
+	      }
+	   })
     </script>
+	
 </body>
 </html>
